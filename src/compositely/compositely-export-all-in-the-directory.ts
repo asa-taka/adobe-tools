@@ -1,8 +1,7 @@
-import { filter, forEach, getAiFiles, splitBy, some, map, find, isOpenedDocument, selectFolder } from '../lib/utils'
-import { defaultLogger as logger } from '../lib/log'
+import { filter, forEach, getAiFiles, splitBy, some, map, find, isOpenedDocument, selectFolder } from '../utils/utils'
+import { defaultLogger as logger } from '../utils'
 import { loadConfig } from './config'
-
-import { exportArtboardsAsPdf } from './export-composites-common'
+import { exportArtboards } from './export'
 
 const mapFilesByName = (files: File[], fileNames: string[]) => {
   return map(fileNames, fileName => find(files, f => f.name === fileName))
@@ -28,7 +27,7 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
   const targetDir = selectFolder("Select a folder contains 'composites.json'")
   const targetDirPath = targetDir.fullName
 
-  const config = loadConfig(targetDirPath + "/composites.json");
+  const config = loadConfig(targetDirPath);
 
   const files = getAiFiles(targetDirPath)
   const targetFiles = reorderTargetFiles(files, config.bulk.targets)
@@ -37,7 +36,7 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
     logger.log(`Export: ${f.name}`)
     const shouldClose = !isOpenedDocument(f.fullName)
     const doc = app.open(f)
-    exportArtboardsAsPdf(doc, config)
+    exportArtboards(doc, config)
     if (shouldClose) doc.close(SaveOptions.PROMPTTOSAVECHANGES)
   })
   

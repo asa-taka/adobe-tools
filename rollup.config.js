@@ -21,20 +21,20 @@ const plugins = [
 
 export default [
   {
-    input: 'src/bin/export-composites.ts',
+    input: 'src/compositely/compositely-export-the-document.ts',
     output: {
-      file: 'output/export-composites.jsx',
+      name: 'compositely-export-the-document',
+      file: 'dist/compositely-export-the-document.jsx',
       format: 'umd',
-      name: 'export-composites',
       esModule: false,
     },
     plugins,
   },
   {
-    input: 'src/bin/export-composites-bulk.ts',
+    input: 'src/compositely/compositely-export-all-in-the-directory.ts',
     output: {
-      name: 'export-composites-bulk',
-      file: 'output/export-composites-bulk.jsx',
+      name: 'compositely-export-all-in-the-directory',
+      file: 'dist/compositely-export-all-in-the-directory.jsx',
       format: 'umd',
       esModule: false,
     },

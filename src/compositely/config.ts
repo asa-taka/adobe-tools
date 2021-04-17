@@ -1,12 +1,8 @@
-import { find, some } from '../lib/utils'
+import { find, some } from '../utils'
 
 export type OutputConfig = {
   dir: string
   dpi: number
-}
-
-export type TargetConfig = {
-  
 }
 
 export type Config = {
@@ -26,8 +22,10 @@ export type Config = {
   }
 }
 
-export const loadConfig = (path: string) => {
-  const file = new File(path)
+const CONFIG_FILE_NAME = 'composites.json'
+
+export const loadConfig = (dirPath: string) => {
+  const file = new File(dirPath + '/' + CONFIG_FILE_NAME)
   if (!file.exists) throw new Error(`File ${file} not found`)
   file.open("r")
   const s = "(" + file.read() + ")"

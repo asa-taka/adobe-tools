@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rollup -c",
-    "install-products": "sudo mv output/*.jsx '/Applications/Adobe Illustrator 2021/Presets.localized/ja_JP/スクリプト/'",
+    "install-products": "sudo mv dist/*.jsx '/Applications/Adobe Illustrator 2021/Presets.localized/ja_JP/スクリプト/'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

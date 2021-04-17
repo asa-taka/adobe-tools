@@ -1,10 +1,8 @@
 /// <reference types="types-for-adobe/Illustrator/2015.3"/>
 
-import { forEach, splitFileExtension } from '../lib/utils'
-import { defaultLogger as logger } from '../lib/log'
-import { getOutputConfig, Config } from './config'
+import { splitFileExtension, defaultLogger as logger } from '../utils'
 
-const getArtboardPsdFileName = (path: string, fileName: string, artboardName: string) => {
+const getArtboardFileName = (path: string, fileName: string, artboardName: string) => {
   const [name, _] = splitFileExtension(fileName)
   return `${path}/${name}_${artboardName}.psd`
 }
@@ -26,7 +24,7 @@ export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhot
   const outFile = new File(outDir.fullName + '/' + doc.name)
   if (options.forceRemoveOldFiles) {
     for (let a of doc.artboards) {
-      const n = getArtboardPsdFileName(outDir.fullName, doc.name, a.name)
+      const n = getArtboardFileName(outDir.fullName, doc.name, a.name)
       const f = new File(n)
       if (f.exists) {
         f.remove()
@@ -45,25 +43,11 @@ export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhot
   opts.embedICCProfile = false
   opts.imageColorSpace = ImageColorSpace.CMYK
   opts.maximumEditability = false
-  opts.resolution = o.dpi
+  opts.resolution = options.dpi
   opts.saveMultipleArtboards = true
   opts.warnings = false
   opts.writeLayers = false
 
   doc.exportFile(outFile, ExportType.PHOTOSHOP, opts)
   logger.log(`Export artboards: ${outFile.fullName}`)
-}
-
-
-export const exportArtboardsAsPdf = (doc: Document, config: Config) => {
-  const docDirPath = doc.path.fullName
-  const out = getOutputConfig(config, doc.name)
-
-  forEach(out, o => {
-    exportArtboardsAsPsd(doc, {
-      outDir: new Folder(docDirPath + '/' + o.dir),
-      dpi: o.dpi,
-      forceRemoveOldFiles: config.options?.forceRemoveOldFiles,
-    })
-  })
 }
