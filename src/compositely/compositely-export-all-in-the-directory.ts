@@ -1,26 +1,21 @@
 import { filter, forEach, getAiFiles, splitBy, some, map, find, isOpenedDocument, selectFolder } from '../utils/utils'
 import { defaultLogger as logger } from '../utils'
-import { loadConfig } from './config'
+import { loadConfig, CompositeConfig } from './config'
 import { exportArtboards } from './export'
 
-const mapFilesByName = (files: File[], fileNames: string[]) => {
-  return map(fileNames, fileName => find(files, f => f.name === fileName))
+const mapFilesByName = (files: File[], names: string[]) => {
+  return map(names, fileName => find(files, f => f.name === fileName))
 }
 
-/**
- * reorderTargetFiles returns reordered `files`.
- * @param files 
- * @param orderConfig 
- * @returns 
- */
-const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
-  const [beforeOthers, afterOthers] = splitBy(orderConfig, fileName => fileName === '...')
-  const others = filter(files, f => !some(orderConfig, configuredFile => f.name === configuredFile))
-  const result: File[] = []
-  return result
-    .concat(mapFilesByName(files, beforeOthers))
-    .concat(others)
-    .concat(mapFilesByName(files, afterOthers))
+const filterOutFilesByNames = (files: File[], names: string[]) => {
+  return filter(files, f => !some(names, n => f.name === n))
+}
+
+const getOrderedTargetFiles = (files: File[], config: CompositeConfig) => {
+  const seq = config.sequence
+  const [beforeOthers, afterOthers] = splitBy(seq, fileName => fileName === '...')
+  const others = filterOutFilesByNames(files, [].concat(seq, config.exclude))
+  return mapFilesByName(files, beforeOthers).concat(others, mapFilesByName(files, afterOthers))
 }
 
 (() => {
@@ -32,7 +27,7 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
   logger.log('Target Directory: ' + targetDir)
 
   const files = getAiFiles(targetDirPath)
-  const targetFiles = reorderTargetFiles(files, config.bulk.targets)
+  const targetFiles = getOrderedTargetFiles(files, config.composite)
   logger.log('Target Files and Order:\n' + map(targetFiles, f => `\t${f.name}`).join('\n'))
 
   forEach(targetFiles, f => {

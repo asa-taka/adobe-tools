@@ -7,8 +7,9 @@
     ]
   },
   "targets": [],
-  "bulk": {
-    "targets": ["test-part1.ai", "...", "test-all.ai"]
+  "composite": {
+    "exclude": ["ignored.ai"],
+    "sequence": ["test-part1.ai", "...", "test-all.ai"]
   },
   "log": {
     "outputType": "file"

@@ -5,6 +5,16 @@ export type OutputConfig = {
   dpi: number
 }
 
+export type CompositeConfig = {
+  exclude: string[]
+  /**
+   * Speficy composite sequence by file names.
+   * The first item will be processed first and so on, respectively.
+   * A special name `'...'` is available to represents other files.
+   */
+  sequence: string[]
+}
+
 export type Config = {
   default: {
     out: OutputConfig[]
@@ -13,9 +23,7 @@ export type Config = {
     sources: string[]
     out: OutputConfig[]
   }[]
-  bulk: {
-    targets: string[]
-  }
+  composite: CompositeConfig
   log: LoggerOptions,
   forceRemoveOldFiles?: boolean
 }
