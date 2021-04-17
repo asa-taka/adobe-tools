@@ -75,3 +75,8 @@ export const selectFolder = (prompt: string) => {
   const doc = app?.activeDocument
   return doc ? doc.fullName.parent : Folder.selectDialog(prompt)
 }
+
+export const resolvePathByActiveDocument = (path: string) => {
+  const doc = app?.activeDocument
+  return [doc.fullName.parent, path].join('/')
+}

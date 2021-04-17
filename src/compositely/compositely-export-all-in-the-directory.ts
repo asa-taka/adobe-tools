@@ -33,7 +33,7 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
 
   const files = getAiFiles(targetDirPath)
   const targetFiles = reorderTargetFiles(files, config.bulk.targets)
-  logger.log('Target Files: ' + map(targetFiles, f => f.name).join(', '))
+  logger.log('Target Files and Order:\n' + map(targetFiles, f => `\t${f.name}`).join('\n'))
 
   forEach(targetFiles, f => {
     logger.log(`Export: ${f.name}`)

@@ -11,10 +11,7 @@
     "targets": ["test-part1.ai", "...", "test-all.ai"]
   },
   "log": {
-    "outputType": "alert"
+    "outputType": "file"
   },
-  "options": {
-    "outputLog": false,
-    "forceRemoveOldFiles": true
-  }
+  "forceRemoveOldFiles": true
 }

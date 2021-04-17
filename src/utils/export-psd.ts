@@ -22,6 +22,7 @@ export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhot
   }
 
   const outFile = new File(outDir.fullName + '/' + doc.name)
+
   if (options.forceRemoveOldFiles) {
     for (let a of doc.artboards) {
       const n = getArtboardFileName(outDir.fullName, doc.name, a.name)
@@ -31,9 +32,6 @@ export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhot
         logger.log(`Remove old file: ${n}`)
       }
     }  
-  }
-  if (outFile.exists && options.forceRemoveOldFiles) {
-    outFile.remove()
   }
 
   // 'any' for the static typed props issue.

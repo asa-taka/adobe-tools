@@ -9,7 +9,7 @@ export const exportArtboards = (doc: Document, config: Config) => {
     exportArtboardsAsPsd(doc, {
       outDir: new Folder(docDirPath + '/' + o.dir),
       dpi: o.dpi,
-      forceRemoveOldFiles: config.options?.forceRemoveOldFiles,
+      forceRemoveOldFiles: config.forceRemoveOldFiles,
     })
   })
 }

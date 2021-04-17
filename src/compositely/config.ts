@@ -17,10 +17,7 @@ export type Config = {
     targets: string[]
   }
   log: LoggerOptions,
-  options: {
-    outputLog: boolean
-    forceRemoveOldFiles?: boolean
-  }
+  forceRemoveOldFiles?: boolean
 }
 
 const CONFIG_FILE_NAME = 'composites.json'
