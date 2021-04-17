@@ -27,10 +27,13 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
   const targetDir = selectFolder("Select a folder contains 'composites.json'")
   const targetDirPath = targetDir.fullName
 
-  const config = loadConfig(targetDirPath);
+  const config = loadConfig(targetDirPath)
+  logger.initialize(config.log)
+  logger.log('Target Directory: ' + targetDir)
 
   const files = getAiFiles(targetDirPath)
   const targetFiles = reorderTargetFiles(files, config.bulk.targets)
+  logger.log('Target Files: ' + map(targetFiles, f => f.name).join(', '))
 
   forEach(targetFiles, f => {
     logger.log(`Export: ${f.name}`)
@@ -40,7 +43,5 @@ const reorderTargetFiles = (files: File[], orderConfig: string[]) => {
     if (shouldClose) doc.close(SaveOptions.PROMPTTOSAVECHANGES)
   })
   
-  if (config.options?.outputLog) {
-    logger.print()
-  }  
+  logger.flushStoredLogs()
 })()

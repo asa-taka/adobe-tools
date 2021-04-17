@@ -1,4 +1,4 @@
-import { find, some } from '../utils'
+import { find, some, LoggerOptions } from '../utils'
 
 export type OutputConfig = {
   dir: string
@@ -16,9 +16,10 @@ export type Config = {
   bulk: {
     targets: string[]
   }
+  log: LoggerOptions,
   options: {
     outputLog: boolean
-    forceRemoveOldFiles: boolean
+    forceRemoveOldFiles?: boolean
   }
 }
 

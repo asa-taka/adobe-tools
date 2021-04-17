@@ -10,6 +10,9 @@
   "bulk": {
     "targets": ["test-part1.ai", "...", "test-all.ai"]
   },
+  "log": {
+    "outputType": "alert"
+  },
   "options": {
     "outputLog": false,
     "forceRemoveOldFiles": true
