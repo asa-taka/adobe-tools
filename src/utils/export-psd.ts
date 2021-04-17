@@ -2,19 +2,26 @@
 
 import { splitFileExtension, defaultLogger as logger } from '../utils'
 
-const getArtboardFileName = (path: string, fileName: string, artboardName: string) => {
+const getArtboardFileName = (
+  path: string,
+  fileName: string,
+  artboardName: string
+) => {
   const [name, _] = splitFileExtension(fileName)
   return `${path}/${name}_${artboardName}.psd`
 }
 
 type MyExportOptionsPhotoshop = {
-  outDir: Folder,
-  dpi: number,
+  outDir: Folder
+  dpi: number
   dryRun?: boolean
   forceRemoveOldFiles?: boolean
 }
 
-export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhotoshop) => {
+export const exportArtboardsAsPsd = (
+  doc: Document,
+  options: MyExportOptionsPhotoshop
+) => {
   const { outDir } = options
   if (!outDir.exists) {
     alert(`${outDir} doesn't exist`)
@@ -31,7 +38,7 @@ export const exportArtboardsAsPsd = (doc: Document, options: MyExportOptionsPhot
         f.remove()
         logger.log(`Remove old file: ${n}`)
       }
-    }  
+    }
   }
 
   // 'any' for the static typed props issue.

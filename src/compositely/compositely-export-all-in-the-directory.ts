@@ -1,4 +1,16 @@
-import { filter, forEach, getAiFiles, splitBy, some, map, find, concat, isOpenedDocument, selectFolder, mapNonNullable } from '../utils/utils'
+import {
+  filter,
+  forEach,
+  getAiFiles,
+  splitBy,
+  some,
+  map,
+  find,
+  concat,
+  isOpenedDocument,
+  selectFolder,
+  mapNonNullable,
+} from '../utils/utils'
 import { defaultLogger as logger } from '../utils'
 import { loadConfig, CompositeConfig } from './config'
 import { exportArtboards } from './export'
@@ -13,12 +25,18 @@ const filterOutFilesByNames = (files: File[], names: string[]) => {
 
 const getOrderedTargetFiles = (files: File[], config: CompositeConfig) => {
   const seq = config.sequence
-  const [beforeOthers, afterOthers] = splitBy(seq, fileName => fileName === '...')
+  const [beforeOthers, afterOthers] = splitBy(
+    seq,
+    fileName => fileName === '...'
+  )
   const others = filterOutFilesByNames(files, concat(seq, config.exclude || []))
-  return mapFilesByName(files, beforeOthers).concat(others, mapFilesByName(files, afterOthers))
+  return mapFilesByName(files, beforeOthers).concat(
+    others,
+    mapFilesByName(files, afterOthers)
+  )
 }
 
-(() => {
+;(() => {
   const targetDir = selectFolder("Select a folder contains 'composites.json'")
   const targetDirPath = targetDir.fullName
 
@@ -28,7 +46,10 @@ const getOrderedTargetFiles = (files: File[], config: CompositeConfig) => {
 
   const files = getAiFiles(targetDirPath)
   const targetFiles = getOrderedTargetFiles(files, config.composite)
-  logger.log('Target Files and Order:\n' + map(targetFiles, f => `\t${f.name}`).join('\n'))
+  logger.log(
+    'Target Files and Order:\n' +
+      map(targetFiles, f => `\t${f.name}`).join('\n')
+  )
 
   forEach(targetFiles, f => {
     logger.log(`Export: ${f.name}`)
@@ -37,6 +58,6 @@ const getOrderedTargetFiles = (files: File[], config: CompositeConfig) => {
     exportArtboards(doc, config)
     if (shouldClose) doc.close(SaveOptions.PROMPTTOSAVECHANGES)
   })
-  
+
   logger.flushStoredLogs()
 })()

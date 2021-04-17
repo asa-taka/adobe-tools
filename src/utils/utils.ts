@@ -6,7 +6,10 @@ export const filter = <T>(items: T[], test: (item: T) => boolean) => {
   return result
 }
 
-export const find = <T>(items: T[], test: (item: T) => boolean): T | undefined => {
+export const find = <T>(
+  items: T[],
+  test: (item: T) => boolean
+): T | undefined => {
   for (let e of items) {
     if (test(e)) return e
   }
@@ -20,7 +23,10 @@ export const map = <T, V>(items: T[], mapper: (item: T) => V) => {
   return result
 }
 
-export const mapNonNullable = <T, V>(items: T[], mapper: (item: T) => (V | undefined)): V[] => {
+export const mapNonNullable = <T, V>(
+  items: T[],
+  mapper: (item: T) => V | undefined
+): V[] => {
   const result: V[] = []
   for (let e of items) {
     const v = mapper(e)
@@ -49,20 +55,23 @@ export const indexOf = <T>(items: T[], test: (item: T) => boolean) => {
   return -1
 }
 
-export const splitBy = <T>(items: T[], test: (item: T) => boolean): [T[], T[]] => {
+export const splitBy = <T>(
+  items: T[],
+  test: (item: T) => boolean
+): [T[], T[]] => {
   const i = indexOf(items, test)
   if (i === -1) return [items, []]
   return [items.slice(0, i), items.slice(i + 1, items.length)]
 }
 
-export const concat = <T> (...arrays: T[][]): T[] => {
+export const concat = <T>(...arrays: T[][]): T[] => {
   const result: T[] = []
   return result.concat(...arrays)
 }
 
 export const splitFileExtension = (name: string) => {
   const tokens = name.split('.')
-  const bearedName = tokens.slice(0, tokens.length-1).join('.')
+  const bearedName = tokens.slice(0, tokens.length - 1).join('.')
   const ext = tokens[tokens.length - 1]
   return [bearedName, ext] as const
 }
@@ -78,7 +87,9 @@ export const filterFiles = (files: (File | Folder)[]) => {
 }
 
 export const getAiFiles = (path: string) => {
-  const files = filter(new Folder(path).getFiles(), f => hasAiFileExtention(f.name))
+  const files = filter(new Folder(path).getFiles(), f =>
+    hasAiFileExtention(f.name)
+  )
   return filterFiles(files)
 }
 

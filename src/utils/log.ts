@@ -1,4 +1,4 @@
-import { resolvePathByActiveDocument } from "./utils"
+import { resolvePathByActiveDocument } from './utils'
 
 export type LoggerOutputType = 'alert' | 'file' | 'console'
 
