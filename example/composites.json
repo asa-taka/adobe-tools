@@ -9,7 +9,7 @@
     },
     "targets": [
       {
-        "sources": ["test-part1.ai"],
+        "sources": ["figure.ai"],
         "out": [
           { "dir": "350dpi", "dpi": 350 },
           { "dir": "72dpi", "dpi": 72 }
@@ -19,7 +19,7 @@
   },
   "composite": {
     "exclude": ["ignored.ai"],
-    "sequence": ["test-part1.ai", "...", "test-all.ai"]
+    "sequence": ["figure.ai", "...", "overview.ai"]
   },
   "log": {
     "outputType": "file"
