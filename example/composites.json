@@ -3,23 +3,23 @@
   "export": {
     "default": {
       "out": [
-        { "dir": "350dpi", "dpi": 350 },
-        { "dir": "150dpi", "dpi": 150 }
+        { "dir": "350dpi", "dpi": 350, "note": "To be published" },
+        { "dir": "150dpi", "dpi": 150, "note": "To be referenced and for web" }
       ]
     },
     "targets": [
       {
         "sources": ["figure.ai"],
         "out": [
-          { "dir": "350dpi", "dpi": 350 },
-          { "dir": "72dpi", "dpi": 72 }
+          { "dir": "350dpi", "dpi": 350, "note": "To be published" },
+          { "dir": "72dpi", "dpi": 72, "note": "To be referenced" }
         ]
       }
     ]
   },
   "composite": {
     "exclude": ["ignored.ai"],
-    "sequence": ["figure.ai", "...", "overview.ai"]
+    "sequence": ["figure.ai", "...", "overview.ai", "link-diagram.ai"]
   },
   "log": {
     "outputType": "file"
