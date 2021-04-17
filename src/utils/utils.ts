@@ -20,10 +20,20 @@ export const map = <T, V>(items: T[], mapper: (item: T) => V) => {
   return result
 }
 
-export const some = <T>(items: T[], test: (item: T) => boolean): boolean | undefined => {
+export const mapNonNullable = <T, V>(items: T[], mapper: (item: T) => (V | undefined)): V[] => {
+  const result: V[] = []
+  for (let e of items) {
+    const v = mapper(e)
+    if (v != null) result.push(v)
+  }
+  return result
+}
+
+export const some = <T>(items: T[], test: (item: T) => boolean): boolean => {
   for (let e of items) {
     if (test(e)) return true
   }
+  return false
 }
 
 export const forEach = <T>(items: T[], callback: (item: T) => void) => {
@@ -43,6 +53,11 @@ export const splitBy = <T>(items: T[], test: (item: T) => boolean): [T[], T[]] =
   const i = indexOf(items, test)
   if (i === -1) return [items, []]
   return [items.slice(0, i), items.slice(i + 1, items.length)]
+}
+
+export const concat = <T> (...arrays: T[][]): T[] => {
+  const result: T[] = []
+  return result.concat(...arrays)
 }
 
 export const splitFileExtension = (name: string) => {

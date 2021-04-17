@@ -11,7 +11,7 @@ export type ExportTargetConfig = {
 }
 
 export type CompositeConfig = {
-  exclude: string[]
+  exclude?: string[]
   /**
    * Speficy composite sequence by file names.
    * The first item will be processed first and so on, respectively.

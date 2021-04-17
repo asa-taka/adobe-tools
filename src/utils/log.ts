@@ -10,7 +10,7 @@ export type LoggerOptions = {
 export class Logger {
   private logs: string[] = []
   private options: LoggerOptions = {}
-  private logFile: File
+  private logFile: File | undefined
 
   initialize(options: LoggerOptions = {}) {
     this.options = options
@@ -39,7 +39,7 @@ export class Logger {
       this.logs.push(s)
     }
     if (this.isFileLogger()) {
-      this.logFile.writeln(s)
+      this.logFile?.writeln(s)
     }
   }
 
@@ -54,7 +54,7 @@ export class Logger {
   finalize() {
     this.flushStoredLogs()
     if (this.isFileLogger()) {
-      this.logFile.close()
+      this.logFile?.close()
     }
   }
 }

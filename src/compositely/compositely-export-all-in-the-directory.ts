@@ -1,10 +1,10 @@
-import { filter, forEach, getAiFiles, splitBy, some, map, find, isOpenedDocument, selectFolder } from '../utils/utils'
+import { filter, forEach, getAiFiles, splitBy, some, map, find, concat, isOpenedDocument, selectFolder, mapNonNullable } from '../utils/utils'
 import { defaultLogger as logger } from '../utils'
 import { loadConfig, CompositeConfig } from './config'
 import { exportArtboards } from './export'
 
 const mapFilesByName = (files: File[], names: string[]) => {
-  return map(names, fileName => find(files, f => f.name === fileName))
+  return mapNonNullable(names, n => find(files, f => f.name === n))
 }
 
 const filterOutFilesByNames = (files: File[], names: string[]) => {
@@ -14,7 +14,7 @@ const filterOutFilesByNames = (files: File[], names: string[]) => {
 const getOrderedTargetFiles = (files: File[], config: CompositeConfig) => {
   const seq = config.sequence
   const [beforeOthers, afterOthers] = splitBy(seq, fileName => fileName === '...')
-  const others = filterOutFilesByNames(files, [].concat(seq, config.exclude))
+  const others = filterOutFilesByNames(files, concat(seq, config.exclude || []))
   return mapFilesByName(files, beforeOthers).concat(others, mapFilesByName(files, afterOthers))
 }
 
