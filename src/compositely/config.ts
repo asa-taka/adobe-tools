@@ -5,6 +5,11 @@ export type OutputConfig = {
   dpi: number
 }
 
+export type ExportTargetConfig = {
+  sources: string[]
+  out: OutputConfig[]
+}
+
 export type CompositeConfig = {
   exclude: string[]
   /**
@@ -16,13 +21,10 @@ export type CompositeConfig = {
 }
 
 export type Config = {
-  default: {
-    out: OutputConfig[]
+  export: {
+    default: ExportTargetConfig
+    targets: ExportTargetConfig[]
   }
-  targets: {
-    sources: string[]
-    out: OutputConfig[]
-  }[]
   composite: CompositeConfig
   log: LoggerOptions,
   forceRemoveOldFiles?: boolean
@@ -30,16 +32,16 @@ export type Config = {
 
 const CONFIG_FILE_NAME = 'composites.json'
 
-export const loadConfig = (dirPath: string) => {
+export const loadConfig = (dirPath: string): Config => {
   const file = new File(dirPath + '/' + CONFIG_FILE_NAME)
   if (!file.exists) throw new Error(`File ${file} not found`)
   file.open("r")
   const s = "(" + file.read() + ")"
   file.close()
-  return eval(s) as Config
+  return eval(s)
 }
 
-export const getOutputConfig = (config: Config, fileName: string) => {
-  const targetConf = find(config.targets, t => some(t.sources, s => s === fileName))
-  return targetConf ? targetConf.out : config.default.out
+export const getOutputConfig = (config: Config, fileName: string): OutputConfig[] => {
+  const targetConf = find(config.export.targets, t => some(t.sources, s => s === fileName))
+  return targetConf ? targetConf.out : config.export.default.out
 }

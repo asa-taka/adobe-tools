@@ -1,12 +1,22 @@
 {
   "configVersion": "0.1.0",
-  "default": {
-    "out": [
-      { "dir": "350dpi", "dpi": 350 },
-      { "dir": "150dpi", "dpi": 150 }
+  "export": {
+    "default": {
+      "out": [
+        { "dir": "350dpi", "dpi": 350 },
+        { "dir": "150dpi", "dpi": 150 }
+      ]
+    },
+    "targets": [
+      {
+        "sources": ["test-part1.ai"],
+        "out": [
+          { "dir": "350dpi", "dpi": 350 },
+          { "dir": "72dpi", "dpi": 72 }
+        ]
+      }
     ]
   },
-  "targets": [],
   "composite": {
     "exclude": ["ignored.ai"],
     "sequence": ["test-part1.ai", "...", "test-all.ai"]
